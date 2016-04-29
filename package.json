@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-ascii-website",
+  "version": "1.0.0",
+  "description": "upload files. get ascii.",
+  "main": "index.js",
+  "scripts": {
+    "test": "lol what is a test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dmfarcas/nodejs-ascii-website.git"
+  },
+  "keywords": [
+    "ascii",
+    "api",
+    "etc"
+  ],
+  "author": "Dan Farcas <dan@farcas.me> (http://farcas.me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dmfarcas/nodejs-ascii-website/issues"
+  },
+  "homepage": "https://github.com/dmfarcas/nodejs-ascii-website#readme"
+}
