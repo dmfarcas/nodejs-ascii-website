@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/dmfarcas/nodejs-ascii-website/issues"
   },
-  "homepage": "https://github.com/dmfarcas/nodejs-ascii-website#readme"
+  "homepage": "https://github.com/dmfarcas/nodejs-ascii-website#readme",
+  "dependencies": {
+    "babel-core": "^6.7.7",
+    "figlet": "^1.1.2",
+    "hapi": "^13.3.0",
+    "inert": "^3.2.0"
+  }
 }
