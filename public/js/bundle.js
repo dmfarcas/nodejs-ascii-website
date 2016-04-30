@@ -46,6 +46,11 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.ChooseType = undefined;
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -64,42 +69,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var User = function (_Component) {
-	    _inherits(User, _Component);
-
-	    function User() {
-	        _classCallCheck(this, User);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(User).apply(this, arguments));
-	    }
-
-	    _createClass(User, [{
-	        key: 'render',
-	        value: function render() {
-	            var userID = this.props.params.userID;
-	            var query = this.props.location.query;
-
-	            var age = query && query.showAge ? '33' : '';
-
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'User' },
-	                _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    'User id: ',
-	                    userID
-	                ),
-	                age
-	            );
-	        }
-	    }]);
-
-	    return User;
-	}(_react.Component);
-
-	var App = function (_Component2) {
-	    _inherits(App, _Component2);
+	var App = function (_Component) {
+	    _inherits(App, _Component);
 
 	    function App() {
 	        _classCallCheck(this, App);
@@ -113,43 +84,8 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(
-	                    'ul',
-	                    null,
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/user/bob', activeClassName: 'active' },
-	                            'Bob'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: {
-	                                    pathname: '/user/bob',
-	                                    query: {
-	                                        showAge: true
-	                                    }
-	                                }, activeClassName: 'active' },
-	                            'Bob With Query Params'
-	                        )
-	                    ),
-	                    _react2.default.createElement(
-	                        'li',
-	                        null,
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/user/sally', activeClassName: 'active' },
-	                            'Sally'
-	                        )
-	                    )
-	                ),
-	                this.props.children
+	                _react2.default.createElement(Input, null),
+	                _react2.default.createElement(ChooseType, null)
 	            );
 	        }
 	    }]);
@@ -157,15 +93,129 @@
 	    return App;
 	}(_react.Component);
 
+	var ChooseType = exports.ChooseType = function (_Component2) {
+	    _inherits(ChooseType, _Component2);
+
+	    function ChooseType(props) {
+	        _classCallCheck(this, ChooseType);
+
+	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChooseType).call(this, props));
+
+	        _this2.state = {
+	            types: ""
+	        };
+	        return _this2;
+	    }
+
+	    _createClass(ChooseType, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this3 = this;
+
+	            this.serverRequest = $.get("getasciilist", function (data) {
+	                _this3.setState({ types: data });
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var results = this.state.types;
+	            return _react2.default.createElement(
+	                'select',
+	                null,
+	                Object.keys(results).map(function (key) {
+	                    return _react2.default.createElement(
+	                        'option',
+	                        { key: key },
+	                        results[key]
+	                    );
+	                }, this)
+	            );
+	        }
+	    }]);
+
+	    return ChooseType;
+	}(_react.Component);
+
+	var Input = function (_Component3) {
+	    _inherits(Input, _Component3);
+
+	    function Input(props) {
+	        _classCallCheck(this, Input);
+
+	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+
+	        _this4.getAscii = _this4.getAscii.bind(_this4);
+	        return _this4;
+	    }
+
+	    _createClass(Input, [{
+	        key: 'getAscii',
+	        value: function getAscii(event) {
+	            var _this5 = this;
+
+	            $.post("makeascii", {
+	                ascii: event.target.value,
+	                font: 'Caligraphy'
+	            }, function (data) {
+	                _this5.refs.asciiArt.update(data);
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement('input', { type: 'text', onChange: this.getAscii }),
+	                _react2.default.createElement(DisplayAscii, { ref: 'asciiArt' })
+	            );
+	        }
+	    }]);
+
+	    return Input;
+	}(_react.Component);
+
+	var DisplayAscii = function (_Component4) {
+	    _inherits(DisplayAscii, _Component4);
+
+	    function DisplayAscii(props) {
+	        _classCallCheck(this, DisplayAscii);
+
+	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayAscii).call(this, props));
+
+	        _this6.state = {
+	            asciiart: "Loading..."
+	        };
+	        _this6.update = _this6.update.bind(_this6);
+
+	        return _this6;
+	    }
+
+	    _createClass(DisplayAscii, [{
+	        key: 'update',
+	        value: function update(data) {
+	            this.setState({ asciiart: data });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'pre',
+	                { id: 'displayascii' },
+	                this.state.asciiart
+	            );
+	        }
+	    }]);
+
+	    return DisplayAscii;
+	}(_react.Component);
+
 	(0, _reactDom.render)(_react2.default.createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(
-	        _reactRouter.Route,
-	        { path: '/', component: App },
-	        _react2.default.createElement(_reactRouter.Route, { path: 'user/:userID', component: User })
-	    )
-	), document.getElementById('example'));
+	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: App })
+	), document.getElementById('app'));
 
 /***/ },
 /* 1 */

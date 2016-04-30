@@ -2,53 +2,93 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {browserHistory, Router, Route, Link} from 'react-router'
 
-class User extends Component {
+class App extends Component {
     render() {
-        let {userID} = this.props.params
-        let {query} = this.props.location
-        let age = query && query.showAge
-            ? '33'
-            : ''
-
         return (
-            <div className="User">
-                <h1>User id: {userID}</h1>
-                {age}
+            <div>
+                <Input/>
+                <ChooseType/>
+            </div>
+
+        )
+    }
+}
+
+export class ChooseType extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            types: ""
+        };
+    }
+
+    componentDidMount() {
+        this.serverRequest = $.get("getasciilist", (data) => {
+            this.setState({types: data});
+        });
+
+    }
+    render() {
+        let results = this.state.types;
+                return(
+                    <select>
+                    { Object.keys(results).map(function (key) {
+                        return (
+                            <option key={key}>{results[key]}</option>
+                        );
+                    }, this)}
+                </select>
+                );
+    }
+}
+
+
+class Input extends Component {
+    constructor(props) {
+        super(props);
+        this.getAscii = this.getAscii.bind(this)
+    }
+    getAscii(event) {
+        $.post("makeascii", {
+            ascii: event.target.value,
+            font: 'Caligraphy'
+        }, (data) => {
+            this.refs.asciiArt.update(data);
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <input type="text" onChange={this.getAscii}/>
+                <DisplayAscii ref='asciiArt' />
             </div>
         )
     }
 }
 
-class App extends Component {
+class DisplayAscii extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            asciiart: "Loading..."
+        };
+        this.update = this.update.bind(this)
+
+    }
+    update(data) {
+        this.setState({asciiart: data});
+    }
+
     render() {
         return (
-            <div>
-                <ul>
-                    <li>
-                        <Link to="/user/bob" activeClassName="active">Bob</Link>
-                    </li>
-                    <li>
-                        <Link to={{
-                            pathname: '/user/bob',
-                            query: {
-                                showAge: true
-                            }
-                        }} activeClassName="active">Bob With Query Params</Link>
-                    </li>
-                    <li>
-                        <Link to="/user/sally" activeClassName="active">Sally</Link>
-                    </li>
-                </ul>
-                {this.props.children}
-            </div>
+            <pre id="displayascii">{this.state.asciiart}</pre>
         )
     }
 }
 
 render((
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
-            <Route path="user/:userID" component={User}/>
-        </Route>
+        <Route path="/" component={App}></Route>
     </Router>
-), document.getElementById('example'))
+), document.getElementById('app'))
