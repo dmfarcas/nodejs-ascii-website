@@ -46,11 +46,6 @@
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.ChooseType = undefined;
-
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -84,8 +79,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement(Input, null),
-	                _react2.default.createElement(ChooseType, null)
+	                _react2.default.createElement(Input, null)
 	            );
 	        }
 	    }]);
@@ -93,7 +87,7 @@
 	    return App;
 	}(_react.Component);
 
-	var ChooseType = exports.ChooseType = function (_Component2) {
+	var ChooseType = function (_Component2) {
 	    _inherits(ChooseType, _Component2);
 
 	    function ChooseType(props) {
@@ -102,12 +96,20 @@
 	        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ChooseType).call(this, props));
 
 	        _this2.state = {
-	            types: ""
+	            types: "",
+	            chosenType: "Caligraphy"
 	        };
+	        _this2.handleChange = _this2.handleChange.bind(_this2);
 	        return _this2;
 	    }
 
 	    _createClass(ChooseType, [{
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            this.setState({ chosenType: event.target.value });
+	            $(document).trigger("UpdateType");
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var _this3 = this;
@@ -122,14 +124,19 @@
 	            var results = this.state.types;
 	            return _react2.default.createElement(
 	                'select',
-	                null,
+	                {
+	                    onChange: this.handleChange,
+	                    ref: 'chosenVal',
+	                    value: this.state.value },
 	                Object.keys(results).map(function (key) {
 	                    return _react2.default.createElement(
 	                        'option',
-	                        { key: key },
-	                        results[key]
+	                        {
+	                            key: key,
+	                            value: results[key].slice(0, -4) },
+	                        results[key].slice(0, -4)
 	                    );
-	                }, this)
+	                })
 	            );
 	        }
 	    }]);
@@ -146,28 +153,50 @@
 	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
 	        _this4.getAscii = _this4.getAscii.bind(_this4);
+	        _this4.handleChange = _this4.handleChange.bind(_this4);
+	        _this4.state = { asciiText: 'Hello, world' };
+	        _this4.getAscii();
 	        return _this4;
 	    }
 
 	    _createClass(Input, [{
 	        key: 'getAscii',
-	        value: function getAscii(event) {
+	        value: function getAscii() {
 	            var _this5 = this;
 
 	            $.post("makeascii", {
-	                ascii: event.target.value,
-	                font: 'Caligraphy'
+	                ascii: this.state.asciiText,
+	                font: this.refs.chooseType ? this.refs.chooseType.refs.chosenVal.value : 'Basic' //this *might* be ugly
 	            }, function (data) {
 	                _this5.refs.asciiArt.update(data);
 	            });
 	        }
 	    }, {
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            // this.getAscii(event.target.value);
+	            this.setState({ asciiText: event.target.value });
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this6 = this;
+
+	            $(document).on("UpdateType", function (event, type) {
+	                _this6.getAscii(event.target.value);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            this.getAscii(); //uh is this ugly
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { type: 'text', onChange: this.getAscii }),
+	                _react2.default.createElement('input', { type: 'text',
+	                    onChange: this.handleChange,
+	                    value: this.state.asciiText }),
+	                _react2.default.createElement(ChooseType, { ref: 'chooseType' }),
 	                _react2.default.createElement(DisplayAscii, { ref: 'asciiArt' })
 	            );
 	        }
@@ -182,14 +211,13 @@
 	    function DisplayAscii(props) {
 	        _classCallCheck(this, DisplayAscii);
 
-	        var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayAscii).call(this, props));
+	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayAscii).call(this, props));
 
-	        _this6.state = {
+	        _this7.state = {
 	            asciiart: "Loading..."
 	        };
-	        _this6.update = _this6.update.bind(_this6);
-
-	        return _this6;
+	        _this7.update = _this7.update.bind(_this7);
+	        return _this7;
 	    }
 
 	    _createClass(DisplayAscii, [{

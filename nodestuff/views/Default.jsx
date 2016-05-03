@@ -1,25 +1,31 @@
 import React, {Component} from 'react'
-import {render} from 'react-dom'
+import {render, findDOMNode} from 'react-dom'
 import {browserHistory, Router, Route, Link} from 'react-router'
 
 class App extends Component {
     render() {
         return (
             <div>
-                <Input/>
-                <ChooseType/>
+                <Input />
             </div>
 
         )
     }
 }
 
-export class ChooseType extends Component {
+class ChooseType extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            types: ""
+            types: "",
+            chosenType: "Caligraphy"
         };
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+    handleChange(event) {
+        this.setState({chosenType: event.target.value});
+        $(document).trigger("UpdateType");
     }
 
     componentDidMount() {
@@ -31,12 +37,19 @@ export class ChooseType extends Component {
     render() {
         let results = this.state.types;
                 return(
-                    <select>
-                    { Object.keys(results).map(function (key) {
+                    <select
+                        onChange={this.handleChange}
+                        ref="chosenVal"
+                        value={this.state.value}>
+                    { Object.keys(results).map((key) => {
                         return (
-                            <option key={key}>{results[key]}</option>
+                            <option
+                                key={key}
+                                value={results[key].slice(0,-4)}>
+                                    {results[key].slice(0,-4)}
+                            </option>
                         );
-                    }, this)}
+                    })}
                 </select>
                 );
     }
@@ -46,21 +59,39 @@ export class ChooseType extends Component {
 class Input extends Component {
     constructor(props) {
         super(props);
-        this.getAscii = this.getAscii.bind(this)
+        this.getAscii = this.getAscii.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.state = { asciiText: 'Hello, world' };
+        this.getAscii();
     }
-    getAscii(event) {
+
+    getAscii() {
         $.post("makeascii", {
-            ascii: event.target.value,
-            font: 'Caligraphy'
+            ascii: this.state.asciiText,
+            font:  this.refs.chooseType ? this.refs.chooseType.refs.chosenVal.value : 'Basic' //there should be a better way
         }, (data) => {
             this.refs.asciiArt.update(data);
         });
     }
 
+    handleChange (event) {
+        // this.getAscii(event.target.value);
+        this.setState({asciiText: event.target.value});
+    }
+
+    componentDidMount() {
+        $(document).on("UpdateType", (event, type) => {
+            this.getAscii(event.target.value);
+        });
+    }
     render() {
+        this.getAscii(); //uh is this ugly
         return (
             <div>
-                <input type="text" onChange={this.getAscii}/>
+                <input type="text"
+                    onChange={this.handleChange}
+                    value={this.state.asciiText}/>
+                <ChooseType ref='chooseType' />
                 <DisplayAscii ref='asciiArt' />
             </div>
         )
@@ -74,8 +105,8 @@ class DisplayAscii extends Component {
             asciiart: "Loading..."
         };
         this.update = this.update.bind(this)
-
     }
+
     update(data) {
         this.setState({asciiart: data});
     }
