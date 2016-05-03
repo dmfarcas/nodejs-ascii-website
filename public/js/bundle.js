@@ -126,8 +126,8 @@
 	                'select',
 	                {
 	                    onChange: this.handleChange,
-	                    value: this.state.value,
-	                    ref: 'testpls' },
+	                    ref: 'chosenVal',
+	                    value: this.state.value },
 	                Object.keys(results).map(function (key) {
 	                    return _react2.default.createElement(
 	                        'option',
@@ -136,7 +136,7 @@
 	                            value: results[key].slice(0, -4) },
 	                        results[key].slice(0, -4)
 	                    );
-	                }, this)
+	                })
 	            );
 	        }
 	    }]);
@@ -153,22 +153,29 @@
 	        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
 	        _this4.getAscii = _this4.getAscii.bind(_this4);
+	        _this4.handleChange = _this4.handleChange.bind(_this4);
+	        _this4.state = { asciiText: 'Hello, world' };
 	        _this4.getAscii();
 	        return _this4;
 	    }
 
 	    _createClass(Input, [{
 	        key: 'getAscii',
-	        value: function getAscii(event) {
+	        value: function getAscii() {
 	            var _this5 = this;
 
-	            var sendThisThing = event ? event.target.value : "Hello, world!";
 	            $.post("makeascii", {
-	                ascii: sendThisThing,
-	                font: this.refs.chooseType ? this.refs.chooseType.state.chosenType : 'Basic'
+	                ascii: this.state.asciiText,
+	                font: this.refs.chooseType ? this.refs.chooseType.refs.chosenVal.value : 'Basic' //this *might* be ugly
 	            }, function (data) {
 	                _this5.refs.asciiArt.update(data);
 	            });
+	        }
+	    }, {
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            // this.getAscii(event.target.value);
+	            this.setState({ asciiText: event.target.value });
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -176,19 +183,19 @@
 	            var _this6 = this;
 
 	            $(document).on("UpdateType", function (event, type) {
-	                console.log(event);
-	                _this6.getAscii(type);
+	                _this6.getAscii(event.target.value);
 	            });
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            this.getAscii(); //uh is this ugly
 	            return _react2.default.createElement(
 	                'div',
 	                null,
 	                _react2.default.createElement('input', { type: 'text',
-	                    onChange: this.getAscii,
-	                    defaultValue: 'Hello, world!' }),
+	                    onChange: this.handleChange,
+	                    value: this.state.asciiText }),
 	                _react2.default.createElement(ChooseType, { ref: 'chooseType' }),
 	                _react2.default.createElement(DisplayAscii, { ref: 'asciiArt' })
 	            );
@@ -210,7 +217,6 @@
 	            asciiart: "Loading..."
 	        };
 	        _this7.update = _this7.update.bind(_this7);
-
 	        return _this7;
 	    }
 
