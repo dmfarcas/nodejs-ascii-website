@@ -1,14 +1,69 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Figlet Generator - turn text into ASCII Art!</title>
-        <link rel="stylesheet" href="/styles/style.css">
-    </head>
-    <body>
-            <h1>Turn text to ASCII Art</h1>
-            <div id="app" />
-            <script src="/js/jquery.min.js" charset="utf-8"></script>
-            <script src="/js/bundle.js"></script>
-    </body>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Figlet Generator</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="styles/default.css" media="screen" title="no title">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <div class="container-wide">
+            <!--NAV-->
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container">
+                <div class="navbar-right" style="background-color: red;">API</div>
+              </div>
+            </nav>
+
+
+            <div class="bd-pageheader">
+                <div class="container">
+                    <h1>Figlet Generator</h1>
+                    <p>Type text. Get Ascii art.</p>
+                </div>
+            </div>
+            <!-- REACT COMPONENT -->
+            <div id="app">
+            </div>
+
+            <!--RANDOM STUFF -->
+
+                      <hr>
+                    <div class="container"><small class="pull-right">Made with <span class="red">♥</span> by dmfarcas</small></div>
+
+        </div>
+
+
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="/js/jquery.min.js" charset="utf-8"></script>
+  <script src="/js/clipboard.min.js"></script>
+  <script src="/js/bundle.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
 </html>

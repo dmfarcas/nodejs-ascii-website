@@ -56,6 +56,8 @@
 
 	var _reactRouter = __webpack_require__(168);
 
+	__webpack_require__(229);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -76,11 +78,7 @@
 	    _createClass(App, [{
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(Input, null)
-	            );
+	            return _react2.default.createElement(Input, null);
 	        }
 	    }]);
 
@@ -125,6 +123,7 @@
 	            return _react2.default.createElement(
 	                'select',
 	                {
+	                    className: 'form-control',
 	                    onChange: this.handleChange,
 	                    ref: 'chosenVal',
 	                    value: this.state.value },
@@ -166,7 +165,7 @@
 
 	            $.post("makeascii", {
 	                ascii: this.state.asciiText,
-	                font: this.refs.chooseType ? this.refs.chooseType.refs.chosenVal.value : 'Basic' //this *might* be ugly
+	                font: this.refs.chooseType ? this.refs.chooseType.refs.chosenVal.value : 'Basic' //there should be a better way
 	            }, function (data) {
 	                _this5.refs.asciiArt.update(data);
 	            });
@@ -193,10 +192,31 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                _react2.default.createElement('input', { type: 'text',
-	                    onChange: this.handleChange,
-	                    value: this.state.asciiText }),
-	                _react2.default.createElement(ChooseType, { ref: 'chooseType' }),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'input-group input-group-lg' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-6 col-offset-md-6' },
+	                                _react2.default.createElement('input', { type: 'text',
+	                                    className: 'form-control',
+	                                    onChange: this.handleChange,
+	                                    value: this.state.asciiText })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col-md-6' },
+	                                _react2.default.createElement(ChooseType, { ref: 'chooseType' })
+	                            )
+	                        )
+	                    )
+	                ),
 	                _react2.default.createElement(DisplayAscii, { ref: 'asciiArt' })
 	            );
 	        }
@@ -205,19 +225,50 @@
 	    return Input;
 	}(_react.Component);
 
-	var DisplayAscii = function (_Component4) {
-	    _inherits(DisplayAscii, _Component4);
+	var CopyToClipboard = function (_Component4) {
+	    _inherits(CopyToClipboard, _Component4);
+
+	    function CopyToClipboard() {
+	        _classCallCheck(this, CopyToClipboard);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(CopyToClipboard).apply(this, arguments));
+	    }
+
+	    _createClass(CopyToClipboard, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            new Clipboard('#copytoclipboard');
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'button',
+	                {
+	                    id: 'copytoclipboard',
+	                    className: 'btn btn-primary-outline',
+	                    'data-clipboard-target': '#displayascii' },
+	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-copy' })
+	            );
+	        }
+	    }]);
+
+	    return CopyToClipboard;
+	}(_react.Component);
+
+	var DisplayAscii = function (_Component5) {
+	    _inherits(DisplayAscii, _Component5);
 
 	    function DisplayAscii(props) {
 	        _classCallCheck(this, DisplayAscii);
 
-	        var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayAscii).call(this, props));
+	        var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(DisplayAscii).call(this, props));
 
-	        _this7.state = {
+	        _this8.state = {
 	            asciiart: "Loading..."
 	        };
-	        _this7.update = _this7.update.bind(_this7);
-	        return _this7;
+	        _this8.update = _this8.update.bind(_this8);
+	        return _this8;
 	    }
 
 	    _createClass(DisplayAscii, [{
@@ -229,9 +280,18 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                'pre',
-	                { id: 'displayascii' },
-	                this.state.asciiart
+	                'div',
+	                { className: 'container-fluid' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'text-center' },
+	                    _react2.default.createElement(
+	                        'pre',
+	                        { id: 'displayascii' },
+	                        this.state.asciiart
+	                    ),
+	                    _react2.default.createElement(CopyToClipboard, null)
+	                )
 	            );
 	        }
 	    }]);
@@ -25788,6 +25848,12 @@
 
 	exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 	module.exports = exports['default'];
+
+/***/ },
+/* 229 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

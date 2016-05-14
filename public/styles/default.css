@@ -1,0 +1,95 @@
+@import url(https://fonts.googleapis.com/css?family=Yeseva+One|Merriweather:400,900|Merriweather+Sans);@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css);/* google fonts */
+/* color palette */
+body {
+  line-height: 5.6;
+  background-color: #6f5499;
+}
+button {
+  background-color: #9A90AA;
+  color: white;
+}
+hr {
+  background-color: #9A90AA;
+  border-color: #9A90AA;
+}
+.navbar {
+  padding: .2rem 1rem;
+}
+.red {
+  font-size: 1.6em;
+  color: red;
+}
+small {
+  font-family: 'Merriweather Sans', sans-serif;
+  color: white;
+}
+pre {
+  color: white;
+  border: 0;
+  padding: 1em;
+  background-color: inherit;
+  line-height: 1 !important;
+}
+h1 {
+  font-family: 'Yeseva One', cursive;
+  font-size: 2em;
+  color: white;
+}
+.bd-pageheader {
+  padding: 2rem .9375rem;
+  margin-bottom: 1.5rem;
+  color: #cdbfe3;
+  text-align: center;
+  background-color: #563d7c;
+}
+#displayascii {
+  font-family: Monospace;
+  white-space: pre;
+}
+::selection {
+  background: #4000A3;
+  /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #4000A3;
+  /* Gecko Browsers */
+}
+/* Mobile first queries */
+/* Larger than mobile */
+@media (min-width: 400px) {
+  h1 {
+    font-size: 2em;
+  }
+  body {
+    padding-top: 146px;
+  }
+  #displayascii {
+    font-size: 0.5em;
+  }
+  .bd-pageheader {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    margin-bottom: 3rem;
+    text-align: left;
+  }
+}
+/* Larger than phablet */
+/* Larger than tablet */
+@media (min-width: 750px) {
+  body {
+    padding-top: 70px;
+  }
+  h1 {
+    font-size: 2.5em;
+  }
+  #displayascii {
+    font-size: 1em;
+  }
+}
+/* Larger than desktop */
+/* Larger than Desktop HD */
+@media only screen and (max-width: 960px) {
+  .filler {
+    display: none;
+  }
+}

@@ -1,5 +1,63 @@
-#returnascii {
-    font-size: 10pt;
+body {
+    background-color: #002b36;
+
+}
+
+h1 {
+  color: #d33682;
+}
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #859900;
+}
+pre {
+  background-color: #002b36;
+  color: #839496;
+  border: 1pt solid #586e75;
+  padding: 1em;
+  box-shadow: 5pt 5pt 8pt #073642;
+}
+
+#displayascii {
     font-family: Monospace;
     white-space: pre;
 }
+
+::selection {
+  background: #ffb7b7; /* WebKit/Blink Browsers */
+
+}
+
+::-moz-selection {
+  background: #ffb7b7; /* Gecko Browsers */
+}
+
+/* Mobile first queries */
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+    #displayascii {
+        font-size: 0.5em;
+    }
+}
+
+/* Larger than phablet */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+    #displayascii {
+        font-size: 1em;
+    }
+}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {
+
+}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}

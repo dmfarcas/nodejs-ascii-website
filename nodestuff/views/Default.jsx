@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import {render, findDOMNode} from 'react-dom'
 import {browserHistory, Router, Route, Link} from 'react-router'
+import  './Default.less';
 
 class App extends Component {
     render() {
         return (
-            <div>
                 <Input />
-            </div>
-
         )
     }
 }
@@ -38,6 +36,7 @@ class ChooseType extends Component {
         let results = this.state.types;
                 return(
                     <select
+                        className="form-control"
                         onChange={this.handleChange}
                         ref="chosenVal"
                         value={this.state.value}>
@@ -54,7 +53,6 @@ class ChooseType extends Component {
                 );
     }
 }
-
 
 class Input extends Component {
     constructor(props) {
@@ -88,13 +86,42 @@ class Input extends Component {
         this.getAscii(); //uh is this ugly
         return (
             <div>
-                <input type="text"
-                    onChange={this.handleChange}
-                    value={this.state.asciiText}/>
-                <ChooseType ref='chooseType' />
+                    <div className="container">
+                        <div className="row">
+                            <div className="input-group input-group-lg">
+
+                            <div className="col-md-6 col-offset-md-6">
+                                <input type="text"
+                                    className="form-control"
+                                    onChange={this.handleChange}
+                                    value={this.state.asciiText}/>
+                            </div>
+                            <div className="col-md-6">
+                                <ChooseType ref='chooseType' />
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 <DisplayAscii ref='asciiArt' />
             </div>
         )
+    }
+}
+
+class CopyToClipboard extends Component {
+    componentDidMount() {
+        new Clipboard('#copytoclipboard');
+    }
+    render() {
+        return (
+
+            <button
+                id="copytoclipboard"
+                className="btn btn-primary-outline"
+                data-clipboard-target="#displayascii">
+                <span className="glyphicon glyphicon-copy"></span>
+            </button>
+        );
     }
 }
 
@@ -113,7 +140,14 @@ class DisplayAscii extends Component {
 
     render() {
         return (
-            <pre id="displayascii">{this.state.asciiart}</pre>
+            <div className="container-fluid">
+                <div className="text-center">
+                    <pre id="displayascii">{this.state.asciiart}</pre>
+                    <CopyToClipboard />
+                </div>
+
+            </div>
+
         )
     }
 }

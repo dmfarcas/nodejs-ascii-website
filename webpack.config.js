@@ -1,4 +1,6 @@
 // Webpack config file
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
     entry: './nodestuff/views/Default.jsx',
     output: {
@@ -9,6 +11,13 @@ module.exports = {
         loaders: [{
             test: /\.jsx$/,
             loader: 'babel-loader'
-        }]
+        },
+			{
+				test: /\.(less|css)$/,
+				loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+			}]
     },
+    plugins: [
+        new ExtractTextPlugin('../styles/default.css')
+    ]
 };
