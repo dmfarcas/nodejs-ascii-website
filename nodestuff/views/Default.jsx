@@ -83,23 +83,23 @@ class Input extends Component {
         });
     }
     render() {
-        this.getAscii(); //uh is this ugly
+        this.getAscii();
         return (
             <div>
                     <div className="container">
                         <div className="row">
-                            <div className="input-group input-group-lg">
-
-                            <div className="col-md-6 col-offset-md-6">
-                                <input type="text"
-                                    className="form-control"
-                                    onChange={this.handleChange}
-                                    value={this.state.asciiText}/>
-                            </div>
-                            <div className="col-md-6">
-                                <ChooseType ref='chooseType' />
-                            </div>
-                            </div>
+                            <form class="form-inline">
+                                <div className="form-group">
+                                <div className="col-md-4 col-md-offset-4">
+                                    <label for="wat">Email address</label>
+                                    <input type="text"
+                                        className="form-control"
+                                        onChange={this.handleChange}
+                                        value={this.state.asciiText}/>
+                                    <ChooseType ref='chooseType' />
+                                </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 <DisplayAscii ref='asciiArt' />
@@ -119,7 +119,7 @@ class CopyToClipboard extends Component {
                 id="copytoclipboard"
                 className="btn btn-primary-outline"
                 data-clipboard-target="#displayascii">
-                <span className="glyphicon glyphicon-copy"></span>
+                <span className="glyphicon glyphicon-copy">Copy!</span>
             </button>
         );
     }

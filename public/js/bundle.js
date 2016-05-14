@@ -188,7 +188,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            this.getAscii(); //uh is this ugly
+	            this.getAscii();
 	            return _react2.default.createElement(
 	                'div',
 	                null,
@@ -199,20 +199,25 @@
 	                        'div',
 	                        { className: 'row' },
 	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'input-group input-group-lg' },
+	                            'form',
+	                            { 'class': 'form-inline' },
 	                            _react2.default.createElement(
 	                                'div',
-	                                { className: 'col-md-6 col-offset-md-6' },
-	                                _react2.default.createElement('input', { type: 'text',
-	                                    className: 'form-control',
-	                                    onChange: this.handleChange,
-	                                    value: this.state.asciiText })
-	                            ),
-	                            _react2.default.createElement(
-	                                'div',
-	                                { className: 'col-md-6' },
-	                                _react2.default.createElement(ChooseType, { ref: 'chooseType' })
+	                                { className: 'form-group' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'col-md-4 col-md-offset-4' },
+	                                    _react2.default.createElement(
+	                                        'label',
+	                                        { 'for': 'wat' },
+	                                        'Email address'
+	                                    ),
+	                                    _react2.default.createElement('input', { type: 'text',
+	                                        className: 'form-control',
+	                                        onChange: this.handleChange,
+	                                        value: this.state.asciiText }),
+	                                    _react2.default.createElement(ChooseType, { ref: 'chooseType' })
+	                                )
 	                            )
 	                        )
 	                    )
@@ -248,7 +253,11 @@
 	                    id: 'copytoclipboard',
 	                    className: 'btn btn-primary-outline',
 	                    'data-clipboard-target': '#displayascii' },
-	                _react2.default.createElement('span', { className: 'glyphicon glyphicon-copy' })
+	                _react2.default.createElement(
+	                    'span',
+	                    { className: 'glyphicon glyphicon-copy' },
+	                    'Copy!'
+	                )
 	            );
 	        }
 	    }]);

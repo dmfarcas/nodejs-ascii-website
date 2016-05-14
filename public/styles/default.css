@@ -1,14 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Yeseva+One|Merriweather:400,900|Merriweather+Sans);@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css);/* google fonts */
 /* color palette */
 body {
-  line-height: 5.6;
   background-color: #6f5499;
+}
+.navbar {
+  min-height: 10px;
 }
 button {
   background-color: #9A90AA;
   color: white;
 }
 hr {
+  margin-top: 120px;
   background-color: #9A90AA;
   border-color: #9A90AA;
 }
@@ -61,7 +64,7 @@ h1 {
     font-size: 2em;
   }
   body {
-    padding-top: 146px;
+    padding-top: 45px;
   }
   #displayascii {
     font-size: 0.5em;
