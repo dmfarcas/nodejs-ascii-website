@@ -10,6 +10,9 @@ button {
   background-color: #9A90AA;
   color: white;
 }
+input {
+  margin-bottom: 10px;
+}
 hr {
   margin-top: 120px;
   background-color: #9A90AA;
@@ -27,6 +30,8 @@ small {
   color: white;
 }
 pre {
+  margin-top: 50px;
+  margin-bottom: 0;
   color: white;
   border: 0;
   padding: 1em;

@@ -207,11 +207,6 @@
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'col-md-4 col-md-offset-4' },
-	                                    _react2.default.createElement(
-	                                        'label',
-	                                        { 'for': 'wat' },
-	                                        'Email address'
-	                                    ),
 	                                    _react2.default.createElement('input', { type: 'text',
 	                                        className: 'form-control',
 	                                        onChange: this.handleChange,
@@ -242,7 +237,16 @@
 	    _createClass(CopyToClipboard, [{
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
-	            new Clipboard('#copytoclipboard');
+	            var clipboard = new Clipboard('#copytoclipboard');
+
+	            clipboard.on('success', function (e) {
+	                var copySpan = $("#copyspan");
+	                copySpan.text("Copied!");
+	                setTimeout(function () {
+	                    copySpan.text("Copy!");
+	                }, 500);
+	                e.clearSelection();
+	            });
 	        }
 	    }, {
 	        key: 'render',
@@ -255,7 +259,9 @@
 	                    'data-clipboard-target': '#displayascii' },
 	                _react2.default.createElement(
 	                    'span',
-	                    { className: 'glyphicon glyphicon-copy' },
+	                    {
+	                        id: 'copyspan',
+	                        className: 'glyphicon glyphicon-copy' },
 	                    'Copy!'
 	                )
 	            );

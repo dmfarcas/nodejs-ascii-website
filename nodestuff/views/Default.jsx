@@ -91,7 +91,6 @@ class Input extends Component {
                             <form class="form-inline">
                                 <div className="form-group">
                                 <div className="col-md-4 col-md-offset-4">
-                                    <label for="wat">Email address</label>
                                     <input type="text"
                                         className="form-control"
                                         onChange={this.handleChange}
@@ -110,7 +109,16 @@ class Input extends Component {
 
 class CopyToClipboard extends Component {
     componentDidMount() {
-        new Clipboard('#copytoclipboard');
+        let clipboard = new Clipboard('#copytoclipboard');
+
+        clipboard.on('success', function(e) {
+            let copySpan = $("#copyspan");
+            copySpan.text("Copied!");
+            setTimeout(() => {
+                copySpan.text("Copy!");
+            }, 500)
+            e.clearSelection();
+        });
     }
     render() {
         return (
@@ -119,7 +127,9 @@ class CopyToClipboard extends Component {
                 id="copytoclipboard"
                 className="btn btn-primary-outline"
                 data-clipboard-target="#displayascii">
-                <span className="glyphicon glyphicon-copy">Copy!</span>
+                <span
+                    id="copyspan"
+                    className="glyphicon glyphicon-copy">Copy!</span>
             </button>
         );
     }
